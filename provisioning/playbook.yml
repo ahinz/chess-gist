@@ -5,7 +5,7 @@
     apt: pkg={{ item }} state=present update_cache=yes
     with_items:
       - unzip
-      - openjdk-6-jre
+      - openjdk-7-jdk
 
   - name: grab play distribution
     get_url: url=http://downloads.typesafe.com/play/2.2.2/play-2.2.2.zip dest=/tmp/play-2.2.2.zip mode=0644
