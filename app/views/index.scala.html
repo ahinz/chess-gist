@@ -1,7 +1,29 @@
-@(message: String)
+@(gists: List[ChessGist], gistForm: Form[(String, String)])
 
-@main("Welcome to Play") {
+@import helper._
 
-    @play20.welcome(message)
+@main("List of gists:") {
+
+    <h1>@gists.size task(s)</h1>
+
+    <ul>
+        @gists.map { gist =>
+            <li>
+                @gist.label
+
+            </li>
+        }
+    </ul>
+
+    <h2>Add a new gist</h2>
+
+    @form(routes.Application.newGist) {
+
+    @inputText(gistForm("label"))
+    @inputText(gistForm("fen"))
+
+    <input type="submit" value="Create">
+
+    }
 
 }
