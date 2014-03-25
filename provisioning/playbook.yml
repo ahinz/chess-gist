@@ -1,0 +1,24 @@
+---
+- hosts: all
+  tasks:
+  - name: apt packages
+    apt: pkg={{ item }} state=present update_cache=yes
+    with_items:
+      - unzip
+      - openjdk-6-jre
+
+  - name: grab play distribution
+    get_url: url=http://downloads.typesafe.com/play/2.2.2/play-2.2.2.zip dest=/tmp/play-2.2.2.zip mode=0644
+
+  - name: unzip to /usr/local
+    command: chdir=/usr/local/ unzip /tmp/play-2.2.2.zip
+             creates=/usr/local/play-2.2.2
+
+  - name: set play folder perms
+    file: path=/usr/local/play-2.2.2 owner=vagrant group=vagrant mode=0755 state=directory recurse=yes
+
+  - name: link it for ease of use
+    file: src=/usr/local/play-2.2.2 dest=/usr/local/play owner=vagrant group=vagrant mode=0755 state=link
+
+  - name: put the binary on our path
+    file: src=/usr/local/play/play dest=/usr/local/bin/play owner=vagrant group=vagrant mode=0755 state=link
