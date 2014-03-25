@@ -1,0 +1,32 @@
+@(gist: ChessGist)
+
+@import helper._
+
+@main("A gist:") {
+
+A Gist!
+
+<table>
+  <tr>
+    @for(file <- List("", "a","b","c","d","e","f","g","h")) {
+      <td class="board-info">@file</td>
+    }
+  </tr>
+  @for(rank <- (0 to 7)) {
+  <tr>
+    <td class="board-info">@(rank+1)</td>
+    @for(file <- (0 to 7)) {
+      <td class="@if((rank+file) % 2 == 0) { light } else { dark }">
+        @gist.position.location.get((rank,file)).map(_.symbol).getOrElse("\u00A0")
+      </td>
+    }
+    <td class="board-info">@(rank+1)</td>
+  </tr>
+  }
+  <tr>
+    @for(file <- List("", "a","b","c","d","e","f","g","h")) {
+      <td class="board-info">@file</td>
+    }
+  </tr>
+</table>
+}

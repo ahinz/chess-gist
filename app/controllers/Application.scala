@@ -23,7 +23,9 @@ object Application extends Controller {
     Ok(views.html.index(ChessGist.all(), gistForm))
   }
 
-  def gist(id: Long) = TODO
+  def gist(id: Long) = Action {
+    Ok(views.html.gistViewer(ChessGist.getById(id)))
+  }
 
   def newGist = Action { implicit request =>
     gistForm.bindFromRequest.fold(

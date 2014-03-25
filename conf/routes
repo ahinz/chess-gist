@@ -3,7 +3,7 @@ GET     /                           controllers.Application.index
 
 # Gists
 GET     /gists                      controllers.Application.gists
-GET     /gist/:id                   controllers.Application.gist(id: Long)
+GET     /gists/:id                  controllers.Application.gist(id: Long)
 POST    /gists                      controllers.Application.newGist
 
 # Map static resources from the /public folder to the /assets URL path

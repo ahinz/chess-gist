@@ -18,7 +18,28 @@ case class Castling(
   whiteQueenside: Boolean, whiteKingside: Boolean,
   blackQueenside: Boolean, blackKingside: Boolean)
 
-case class Material(white: Boolean, mtype: MaterialType)
+case class Material(white: Boolean, mtype: MaterialType) {
+  def symbol() = (white, mtype) match {
+    case (true, Rook) => "♖"
+    case (false, Rook) => "♜"
+
+    case (true, Knight) => "♘"
+    case (false, Knight) => "♞"
+
+    case (true, Bishop) => "♗"
+    case (false, Bishop) => "♝"
+
+    case (true, King) => "♔"
+    case (false, King) => "♚"
+
+    case (true, Queen) => "♕"
+    case (false, Queen) => "♛"
+
+    case (true, Pawn) => "♙"
+    case (false, Pawn) => "♟"
+  }
+}
+
 case class Position(
   location: Map[(Int, Int), Material], activeColor: String, castling: Castling,
   enpassantLoc: Option[(Int, Int)], halfmove: Int, fullmove: Int)
@@ -86,6 +107,12 @@ object ChessGist {
         'fen -> fen
       ).executeUpdate()
     }
+  }
+
+  def getById(id: Long): ChessGist = DB.withConnection { implicit c =>
+    SQL("select * from chessgist where id = {id}").on(
+      'id -> id
+    ).as(chessGist.single)
   }
 
   def delete(id: Long) {}

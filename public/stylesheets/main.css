@@ -1,0 +1,11 @@
+td.dark {
+    background: black;
+}
+
+td.light {
+    background: white;
+}
+
+td {
+    color: gray;
+}
