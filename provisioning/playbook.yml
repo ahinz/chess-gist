@@ -1,8 +1,10 @@
 ---
 - hosts: all
   tasks:
+
+  - apt: update_cache=yes
   - name: apt packages
-    apt: pkg={{ item }} state=present update_cache=yes
+    apt: pkg={{ item }} state=present
     with_items:
       - unzip
       - openjdk-7-jdk
@@ -16,6 +18,9 @@
 
   - name: set play folder perms
     file: path=/usr/local/play-2.2.2 owner=vagrant group=vagrant mode=0755 state=directory recurse=yes
+
+  - name: Make "target" directory
+    file: path=/tmp/target owner=vagrant group=vagrant mode=0755 state=directory
 
   - name: link it for ease of use
     file: src=/usr/local/play-2.2.2 dest=/usr/local/play owner=vagrant group=vagrant mode=0755 state=link
