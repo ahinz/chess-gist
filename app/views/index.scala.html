@@ -9,8 +9,7 @@
     <ul>
         @gists.map { gist =>
             <li>
-                @gist.label
-
+              <a href="@routes.Application.gist(gist.id)">@gist.label</a>
             </li>
         }
     </ul>
